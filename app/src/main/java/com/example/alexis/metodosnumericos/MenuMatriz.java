@@ -2,6 +2,7 @@ package com.example.alexis.metodosnumericos;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
@@ -68,11 +69,15 @@ public class MenuMatriz extends AppCompatActivity {
             }
         });
 
+        //Activity Gauss
         botonGauss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 generarMatriz();
-                float[] prueba = matriz.getGauss();
+                float[] elementosMatrizGauss = matriz.getGauss();
+                Intent gaussActivity = new Intent(MenuMatriz.this, GaussActivity.class);
+                getIntent().putExtra("ElementosMatriz", elementosMatrizGauss);
+                startActivity(gaussActivity);
             }
         });
 

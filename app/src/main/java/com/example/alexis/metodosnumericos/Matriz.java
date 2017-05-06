@@ -14,7 +14,6 @@ public class Matriz {
     private int renglones;
     private float[][] matriz;
 
-
     /*
     *
     * Los elementos de la matriz se reciben de la forma
