@@ -21,6 +21,7 @@ public class MenuMatriz extends AppCompatActivity {
     RelativeLayout layoutMatriz;
     EditText eTr;
     Button botonGauss;
+    Button botonGaussJordan;
     private EditText[] casillasCoeficientes;
     private float[] elementos;        //Puede ser un ArrayList<Integer>
     private Matriz matriz;
@@ -39,6 +40,7 @@ public class MenuMatriz extends AppCompatActivity {
         setContentView(R.layout.activity_menu_matriz);
 
         botonGauss = (Button)findViewById(R.id.buttonGauss);
+        botonGaussJordan = (Button)findViewById(R.id.buttonGaussJordan);
         layoutMatriz = (RelativeLayout)findViewById(R.id.layout_identificador);
         eTr = (EditText)findViewById(R.id.eTPrincipal);
         eTr.setVisibility(View.INVISIBLE);
@@ -78,6 +80,15 @@ public class MenuMatriz extends AppCompatActivity {
                 Intent gaussActivity = new Intent(MenuMatriz.this, GaussActivity.class);
                 getIntent().putExtra("ElementosMatriz", elementosMatrizGauss);
                 startActivity(gaussActivity);
+            }
+        });
+
+        //Activity GaussJordan
+        botonGaussJordan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                generarMatriz();
+                float[] elementosMatrizGaussJordan = matriz.getGaussJordan();
             }
         });
 

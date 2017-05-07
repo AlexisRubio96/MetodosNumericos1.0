@@ -86,6 +86,16 @@ public class Matriz {
 
     }
 
+    public float[] getGaussJordan(){
+        Log.d("Get GaussJordan matriz", String.valueOf(this.getRenglones())+" x "+String.valueOf(this.getColumnas()));
+        for (int i = 0; i < this.getRenglones(); i++) {
+            Log.d("Renglon"+String.valueOf(i), Arrays.toString(this.getMatriz()[i]));
+        }
+        GaussJordan matrizGaussJordan = new GaussJordan(this);
+
+        return elementosMatriz(matrizGaussJordan.runGaussJordan());
+    }
+
     /*
     @Override
     public String toString() {

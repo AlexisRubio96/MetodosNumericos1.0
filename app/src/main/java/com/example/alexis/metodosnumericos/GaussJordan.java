@@ -5,18 +5,18 @@ import android.util.Log;
 import java.util.Arrays;
 
 /**
- * Created by Alexis on 04/05/2017.
+ * Created by Alexis on 06/05/2017.
  */
-public class Gauss extends Metodos{
+public class GaussJordan extends Metodos{
 
     private Matriz matriz;
 
-    public Gauss(Matriz matriz){
+    public GaussJordan(Matriz matriz){
         this.matriz = matriz;
         float[][] mat = matriz.getMatriz();
     }
 
-    public float[][] runGauss(){
+    public float[][] runGaussJordan(){
 
         float[][] mat = matriz.getMatriz();
         float[][] matB = new float[2][matriz.getColumnas()];
@@ -40,6 +40,13 @@ public class Gauss extends Metodos{
                         matB[1] = mat[n];
                         mat[n] = gaussUtil(matB, i);
                     }
+                    if(i != 0){
+
+                        for (int k = i-1; k >=0; k--) {
+                            matB[1] = mat[k];
+                            mat[k] = gaussUtil(matB,i);
+                        }
+                    }
                 }
             }
             Log.d("Iteraciion", "#"+String.valueOf(i));
@@ -51,8 +58,5 @@ public class Gauss extends Metodos{
         return mat;
 
     }
-
-
-
 
 }
