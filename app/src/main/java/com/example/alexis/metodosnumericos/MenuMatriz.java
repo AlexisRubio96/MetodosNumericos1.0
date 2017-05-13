@@ -9,22 +9,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 
 public class MenuMatriz extends AppCompatActivity {
 
-    NumberPicker pickerCol;
-    NumberPicker pickerRen;
-    RelativeLayout layoutMatriz;
-    EditText eTr;
-    Button botonGauss;
-    Button botonGaussJordan;
+    private NumberPicker pickerCol;
+    private NumberPicker pickerRen;
+    private RelativeLayout layoutMatriz;
+    private EditText eTr;
+    private Button botonGauss;
+    private Button botonGaussJordan;
     private EditText[] casillasCoeficientes;
     private float[] elementos;        //Puede ser un ArrayList<Integer>
     private Matriz matriz;
+    private ListView menuLateral;
 
 
     @Override
@@ -39,11 +43,22 @@ public class MenuMatriz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_matriz);
 
+        menuLateral = (ListView)findViewById(R.id.menuLateral);
         botonGauss = (Button)findViewById(R.id.buttonGauss);
         botonGaussJordan = (Button)findViewById(R.id.buttonGaussJordan);
         layoutMatriz = (RelativeLayout)findViewById(R.id.layout_identificador);
         eTr = (EditText)findViewById(R.id.eTPrincipal);
         eTr.setVisibility(View.INVISIBLE);
+        String[] opciones = {"Gauss", "GaussJordan", "GaussSeidel", "Cramer", "Inversa", "Determinante"};
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(MenuMatriz.this, android.R.layout.simple_list_item_1);      //Ver opciones de parametros
+        menuLateral.setAdapter(adp);
+
+        menuLateral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String metodo = (String)menuLateral.getAdapter().getItem(position);
+            }
+        });
 
 
         pickerCol = (NumberPicker)findViewById(R.id.columnas);
@@ -78,7 +93,7 @@ public class MenuMatriz extends AppCompatActivity {
                 generarMatriz();
                 float[] elementosMatrizGauss = matriz.getGauss();
                 Intent gaussActivity = new Intent(MenuMatriz.this, GaussActivity.class);
-                getIntent().putExtra("ElementosMatriz", elementosMatrizGauss);
+                //getIntent().putExtra("ElementosMatriz", elementosMatrizGauss);
                 startActivity(gaussActivity);
             }
         });
@@ -91,6 +106,8 @@ public class MenuMatriz extends AppCompatActivity {
                 float[] elementosMatrizGaussJordan = matriz.getGaussJordan();
             }
         });
+
+
 
 
     }

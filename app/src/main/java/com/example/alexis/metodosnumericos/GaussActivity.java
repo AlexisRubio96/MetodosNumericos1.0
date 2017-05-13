@@ -11,12 +11,9 @@ public class GaussActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gauss);
 
-        Bundle elementos = getIntent().getExtras();
-        float[] elementosMatriz = elementos.getFloatArray("ElementosMatriz");
 
-        for (float valor : elementosMatriz) {
-
-        }
+//        Bundle elementos = getIntent().getExtras();
+//        float[] elementosMatriz = elementos.getFloatArray("ElementosMatriz");
 
 
 
