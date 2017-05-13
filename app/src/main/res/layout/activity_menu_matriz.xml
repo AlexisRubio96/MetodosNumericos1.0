@@ -1,83 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.alexis.myfirstaplication.Main2Activity">
+    tools:context="com.example.alexis.metodosnumericos.MenuMatriz">
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/layout_identificador"
-            android:layout_width="284dp"
-            android:layout_height="235dp"
-            android:layout_gravity="center_horizontal|top">
+                android:id="@+id/layout_identificador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+            android:layout_alignParentTop="true">
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="322dp"
-            android:layout_height="211dp"
-            android:layout_gravity="center_horizontal|bottom">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gauss"
-                android:id="@+id/buttonGauss"
-                android:layout_above="@+id/buttonGaussJordan"
-                android:layout_alignRight="@+id/buttonGaussJordan"
-                android:layout_alignEnd="@+id/buttonGaussJordan"
-                android:layout_alignLeft="@+id/buttonGaussJordan"
-                android:layout_alignStart="@+id/buttonGaussJordan" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gauss-Jordan"
-                android:id="@+id/buttonGaussJordan"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Gauss-Seidel"
-                android:id="@+id/button6"
-                android:layout_below="@+id/buttonGaussJordan"
-                android:layout_alignLeft="@+id/buttonGaussJordan"
-                android:layout_alignStart="@+id/buttonGaussJordan"
-                android:layout_alignRight="@+id/buttonGaussJordan"
-                android:layout_alignEnd="@+id/buttonGaussJordan" />
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/columnas"
-                android:layout_below="@+id/tVCol"
-                android:layout_alignRight="@+id/tVCol"
-                android:layout_alignEnd="@+id/tVCol"
-                android:layout_alignBottom="@+id/button6"
-                android:backgroundTint="@android:color/holo_blue_bright"/>
-
-            <NumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/renglones"
-                android:layout_below="@+id/tVRen"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@+id/button6" />
+            android:layout_width="match_parent"
+            android:layout_height="226dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,9 +34,26 @@
                 android:text="Columnas"
                 android:id="@+id/tVCol"
                 android:textSize="15dp"
-                android:layout_alignTop="@+id/buttonGauss"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/columnas"
+                android:layout_alignStart="@+id/columnas" />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/columnas"
+                android:backgroundTint="@android:color/holo_blue_bright"
+                android:layout_above="@+id/tVCol"
+                android:layout_toRightOf="@+id/button"
+                android:layout_toEndOf="@+id/button" />
+
+            <NumberPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/renglones"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/button"
+                android:layout_toStartOf="@+id/button" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,10 +61,45 @@
                 android:text="Renglones"
                 android:id="@+id/tVRen"
                 android:textSize="15dp"
-                android:layout_alignTop="@+id/buttonGauss"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/renglones"
+                android:layout_alignEnd="@+id/renglones" />
 
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:visibility="invisible"/>
+
+            <!--            <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gauss"
+                                    android:id="@+id/buttonGauss"
+                            android:layout_alignTop="@+id/renglones"
+                            android:layout_centerHorizontal="true" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gauss-Jordan"
+                            android:id="@+id/buttonGaussJordan"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true" />
+
+                        <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gauss-Seidel"
+                                    android:id="@+id/button6"
+                            android:layout_below="@+id/buttonGaussJordan"
+                            android:layout_toLeftOf="@+id/columnas"
+                            android:layout_alignLeft="@+id/buttonGaussJordan"
+                            android:layout_alignStart="@+id/buttonGaussJordan" />-->
         </RelativeLayout>
 
         <EditText
@@ -111,17 +112,18 @@
             android:layout_marginStart="90dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text=""
+            android:text="8"
+            android:textSize="20sp"
             android:paddingRight="100dp"
             android:paddingTop="20dp"
             android:layout_gravity="left|center_vertical" />
 
+    </LinearLayout>
+</ScrollView>
 
-    </FrameLayout>
 
     <ListView
         android:id="@+id/menuLateral"
-
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
