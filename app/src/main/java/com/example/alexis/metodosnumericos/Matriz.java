@@ -116,7 +116,8 @@ public class Matriz {
 
     }
 
-    public float[] getGaussSeidel(float tolerancia){
+    //Unica con double
+    public double[] getGaussSeidel(float tolerancia){
 
         float[] valIniciales = {8,1,2};
         Matriz matValiIniciales = new Matriz(1, this.getRenglones(), valIniciales);
