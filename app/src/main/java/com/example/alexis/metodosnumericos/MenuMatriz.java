@@ -145,6 +145,8 @@ public class MenuMatriz extends AppCompatActivity {
                         float[] elementosMatrizGaussJordan = matriz.getGaussJordan();
                         break;
                     case "GaussSeidel":
+                        float[] elementosGaussSeidel = matriz.getGaussSeidel((float)0.01);
+                        Log.d("GaussSeidel", Arrays.toString(elementosGaussSeidel));
                         break;
                     case "Cramer":
                         float[] elementosMatrizCramer = matriz.getCramer();

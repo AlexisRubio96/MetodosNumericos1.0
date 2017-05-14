@@ -107,6 +107,27 @@ public class Matriz {
 
     }
 
+
+
+    public float getDeterminante(){
+
+        Determinante resDeterminante = new Determinante(this);
+        return resDeterminante.runDeterminante();
+
+    }
+
+    public float[] getGaussSeidel(float tolerancia){
+
+        float[] valIniciales = {8,1,2};
+        Matriz matValiIniciales = new Matriz(1, this.getRenglones(), valIniciales);
+
+        GaussSeidel resGaussSeidel = new GaussSeidel(this, matValiIniciales, tolerancia);
+
+        return resGaussSeidel.runGaussSeidel();
+
+    }
+
+
     private Matriz[] getCoeficientesConstantes(){
 
         float[] elementos = this.getElementos();
@@ -125,13 +146,6 @@ public class Matriz {
         Matriz[] matrices = {matrizNxN,matrizNx1};
 
         return matrices;
-
-    }
-
-    public float getDeterminante(){
-
-        Determinante resDeterminante = new Determinante(this);
-        return resDeterminante.runDeterminante();
 
     }
     /*
