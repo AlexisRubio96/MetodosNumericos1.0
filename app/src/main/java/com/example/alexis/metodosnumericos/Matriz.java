@@ -2,7 +2,6 @@ package com.example.alexis.metodosnumericos;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -93,9 +92,48 @@ public class Matriz {
         }
         GaussJordan matrizGaussJordan = new GaussJordan(this);
 
-        return elementosMatriz(matrizGaussJordan.runGaussJordan());
+        //Quitar
+        float[] elems = elementosMatriz(matrizGaussJordan.runGaussJordan());
+
+        return elems;
     }
 
+    public float[] getCramer(){
+
+        Matriz[] matrices = this.getCoeficientesConstantes();
+        Cramer matrizCramer = new Cramer(matrices[0], matrices[1]);
+
+        return matrizCramer.runCramer();
+
+    }
+
+    private Matriz[] getCoeficientesConstantes(){
+
+        float[] elementos = this.getElementos();
+
+        int lengthMatNxN = elementos.length-this.getRenglones();
+        float[] elementosNxN = new float[lengthMatNxN];
+        System.arraycopy(elementos,0,elementosNxN,0,lengthMatNxN);
+
+        int lengthMatNx1 = this.getRenglones();
+        float[] elementosNx1 = new float[lengthMatNx1];
+        System.arraycopy(elementos, lengthMatNx1*lengthMatNx1,elementosNx1,0,lengthMatNx1);
+
+        Matriz matrizNxN = new Matriz(this.getColumnas()-1,this.getRenglones(),elementosNxN);
+        Matriz matrizNx1 = new Matriz(1,this.getRenglones(),elementosNx1);
+
+        Matriz[] matrices = {matrizNxN,matrizNx1};
+
+        return matrices;
+
+    }
+
+    public float getDeterminante(){
+
+        Determinante resDeterminante = new Determinante(this);
+        return resDeterminante.runDeterminante();
+
+    }
     /*
     @Override
     public String toString() {

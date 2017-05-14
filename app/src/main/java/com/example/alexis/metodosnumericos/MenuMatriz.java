@@ -4,11 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.provider.Contacts;
 import android.support.multidex.MultiDex;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+
+import java.util.Arrays;
 
 public class MenuMatriz extends AppCompatActivity {
 
@@ -67,12 +71,12 @@ public class MenuMatriz extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Ajustes columna
-        pickerCol.setMaxValue(5);
+        pickerCol.setMaxValue(7);
         pickerCol.setMinValue(2);
         pickerCol.setWrapSelectorWheel(false);
 
         //Ajustes Renglones
-        pickerRen.setMaxValue(5);
+        pickerRen.setMaxValue(7);
         pickerRen.setMinValue(2);
         pickerRen.setWrapSelectorWheel(false);
 
@@ -121,13 +125,40 @@ public class MenuMatriz extends AppCompatActivity {
                 String metodo = (String)menuLateral.getAdapter().getItem(position);
                 Log.d("Se seleccionó", metodo);
                 generarMatriz();
+                Bundle bundle;
                 switch (metodo){
                     case "Gauss":
                         float[] elementosMatrizGauss = matriz.getGauss();
+                        for (float num :
+                                elementosMatrizGauss) {
+                            Log.d("*****", String.valueOf(num));
+                        }
+                        Intent gaussActivity = new Intent(MenuMatriz.this,GaussActivity.class);
+                        bundle = new Bundle();
+                        bundle.putFloatArray("elementos", elementosMatrizGauss);
+                        bundle.putInt("columnas",matriz.getColumnas());
+                        bundle.putInt("renglones",matriz.getRenglones());
+                        gaussActivity.putExtras(bundle);
+                        startActivity(gaussActivity);
+                        break;
                     case "GaussJordan":
                         float[] elementosMatrizGaussJordan = matriz.getGaussJordan();
+                        break;
+                    case "GaussSeidel":
+                        break;
+                    case "Cramer":
+                        float[] elementosMatrizCramer = matriz.getCramer();
+                        Log.d("Cramer", Arrays.toString(elementosMatrizCramer));
+                        break;
+                    case "Inversa":
+                        break;
+                    case "Determinante":
+                        float resDeterminante = matriz.getDeterminante();
+                        Log.d("Determinante", String.valueOf(resDeterminante));
+                        break;
                     default:
                         Log.d("Se seleccionó", metodo);
+                        break;
                 }
             }
         });
@@ -163,11 +194,13 @@ public class MenuMatriz extends AppCompatActivity {
             for (int j = 0; j < ren; j++){
                 EditText eT = new EditText(((EditText)findViewById(R.id.eTPrincipal)).getContext());       //Checar
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 140);
-                eT.setText(""+String.valueOf(parcheDeDios));
+                eT.setText(String.valueOf(parcheDeDios));
                 params.setMargins(100+(i*100),80+(j*100),(i*100),60);
                 params.addRule(EditText.TEXT_ALIGNMENT_CENTER);
                 //eT.setTextSize(12);
-                eT.setEms(5);
+                eT.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED |
+                        InputType.TYPE_NUMBER_VARIATION_NORMAL );      //Input con numeros decimales
+                //eT.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 layoutMatriz.addView(eT, params);
                 casillasCoeficientes[parcheDeDios] = eT;
                 parcheDeDios++;
@@ -188,5 +221,7 @@ public class MenuMatriz extends AppCompatActivity {
         }
         this.matriz = new Matriz(columnas, renglones, elementos);
     }
+
+
 
 }

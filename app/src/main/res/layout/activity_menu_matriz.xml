@@ -116,6 +116,7 @@
             android:textSize="20sp"
             android:paddingRight="100dp"
             android:paddingTop="20dp"
+            android:editable="false"
             android:layout_gravity="left|center_vertical" />
 
     </LinearLayout>
