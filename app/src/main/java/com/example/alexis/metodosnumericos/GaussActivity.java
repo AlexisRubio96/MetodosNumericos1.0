@@ -26,6 +26,7 @@ public class GaussActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gauss);
         Bundle extras = getIntent().getExtras();
         layoutMatriz = (RelativeLayout)findViewById(R.id.relativeLayout);
+        tVTitulo = (TextView)findViewById(R.id.tVTtitulo);
 
         if(extras == null){
             Log.d("Es null", "nulllll");
@@ -33,6 +34,7 @@ public class GaussActivity extends AppCompatActivity {
             columnas = extras.getInt("columnas");
             renglones = extras.getInt("renglones");
             metodo = extras.getString("metodo");
+            tVTitulo.append("Solución del Método de " + metodo);
             Log.d("Elementos", Arrays.toString(elementosMatriz));
             if(metodo.equals("GaussJordan") || metodo.equals("Inversa")){
                 elementosMatriz = extras.getFloatArray("elementos");

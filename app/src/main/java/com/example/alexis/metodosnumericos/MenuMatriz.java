@@ -152,11 +152,25 @@ public class MenuMatriz extends AppCompatActivity {
                         startActivity(gaussJordanActivity);
                         break;
                     case "GaussSeidel":
-                        double[] elementosGaussSeidel = matriz.getGaussSeidel((double)0.01);
+                        float[] elementosGaussSeidel = matriz.getGaussSeidel((float)0.01);
+                        Intent gausSeidelActivity = new Intent(MenuMatriz.this, OtherActivities.class);
+                        bundle = new Bundle();
+                        bundle.putFloatArray("elementos", elementosGaussSeidel);
+                        bundle.putInt("renglones",matriz.getRenglones());
+                        bundle.putString("metodo",metodo);
+                        gausSeidelActivity.putExtras(bundle);
+                        startActivity(gausSeidelActivity);
                         Log.d("GaussSeidel", Arrays.toString(elementosGaussSeidel));
                         break;
                     case "Cramer":
                         float[] elementosMatrizCramer = matriz.getCramer();
+                        Intent cramerActivity = new Intent(MenuMatriz.this, OtherActivities.class);
+                        bundle = new Bundle();
+                        bundle.putFloatArray("elementos", elementosMatrizCramer);
+                        bundle.putInt("renglones",matriz.getRenglones());
+                        bundle.putString("metodo",metodo);
+                        cramerActivity.putExtras(bundle);
+                        startActivity(cramerActivity);
                         Log.d("Cramer", Arrays.toString(elementosMatrizCramer));
                         break;
                     case "Inversa":
@@ -172,6 +186,12 @@ public class MenuMatriz extends AppCompatActivity {
                         break;
                     case "Determinante":
                         float resDeterminante = matriz.getDeterminante();
+                        Intent determinanteActivity = new Intent(MenuMatriz.this, OtherActivities.class);
+                        bundle = new Bundle();
+                        bundle.putFloat("elemento", resDeterminante);
+                        bundle.putString("metodo",metodo);
+                        determinanteActivity.putExtras(bundle);
+                        startActivity(determinanteActivity);
                         Log.d("Determinante", String.valueOf(resDeterminante));
                         break;
                     default:
