@@ -4,10 +4,12 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.preference.DialogPreference;
 import android.provider.Contacts;
 import android.support.multidex.MultiDex;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -40,6 +43,7 @@ public class MenuMatriz extends AppCompatActivity {
     private Matriz matriz;
     private ListView menuLateral;
     private DrawerLayout drawerLayout;
+    private EditText input;
 
     //Multidex
     @Override
@@ -131,9 +135,9 @@ public class MenuMatriz extends AppCompatActivity {
                 Bundle bundle;
                 switch (metodo){
                     case "Gauss":
-                        TreeMap<Integer, float[]> elementosMatrizGauss = matriz.getGauss();
                         Intent gaussActivity = new Intent(MenuMatriz.this,GaussActivity.class);
                         bundle = new Bundle();
+                        bundle.putFloatArray("elementos", elementos);       //Para generar la matriz en el GaussActivity
                         bundle.putInt("columnas",matriz.getColumnas());
                         bundle.putInt("renglones",matriz.getRenglones());
                         bundle.putString("metodo", metodo);
@@ -152,47 +156,74 @@ public class MenuMatriz extends AppCompatActivity {
                         startActivity(gaussJordanActivity);
                         break;
                     case "GaussSeidel":
-                        float[] elementosGaussSeidel = matriz.getGaussSeidel((float)0.01);
-                        Intent gausSeidelActivity = new Intent(MenuMatriz.this, OtherActivities.class);
-                        bundle = new Bundle();
-                        bundle.putFloatArray("elementos", elementosGaussSeidel);
-                        bundle.putInt("renglones",matriz.getRenglones());
-                        bundle.putString("metodo",metodo);
-                        gausSeidelActivity.putExtras(bundle);
-                        startActivity(gausSeidelActivity);
-                        Log.d("GaussSeidel", Arrays.toString(elementosGaussSeidel));
+                        if((matriz.getRenglones()+1)==matriz.getColumnas()){
+                            /*AlertDialog.Builder ab = new AlertDialog.Builder(MenuMatriz.this);
+                            ab.setTitle("GaussSeidel");
+                            ab.setMessage("Tolerancia(valores tienen que ser <1): ");*/
+
+                            float[] elementosGaussSeidel = matriz.getGaussSeidel((float)0.01);
+                            Intent gausSeidelActivity = new Intent(MenuMatriz.this, OtherActivities.class);
+                            bundle = new Bundle();
+                            bundle.putFloatArray("elementos", elementosGaussSeidel);
+                            bundle.putInt("renglones",matriz.getRenglones());
+                            bundle.putString("metodo",metodo);
+                            gausSeidelActivity.putExtras(bundle);
+                            startActivity(gausSeidelActivity);
+                            Log.d("GaussSeidel", Arrays.toString(elementosGaussSeidel));
+                        }else{
+                            Toast toast = Toast.makeText(getApplicationContext(), "Matriz no valida para este método", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                         break;
                     case "Cramer":
-                        float[] elementosMatrizCramer = matriz.getCramer();
-                        Intent cramerActivity = new Intent(MenuMatriz.this, OtherActivities.class);
-                        bundle = new Bundle();
-                        bundle.putFloatArray("elementos", elementosMatrizCramer);
-                        bundle.putInt("renglones",matriz.getRenglones());
-                        bundle.putString("metodo",metodo);
-                        cramerActivity.putExtras(bundle);
-                        startActivity(cramerActivity);
-                        Log.d("Cramer", Arrays.toString(elementosMatrizCramer));
+                        if((matriz.getRenglones()+1)==matriz.getColumnas()){
+                            float[] elementosMatrizCramer = matriz.getCramer();
+                            Intent cramerActivity = new Intent(MenuMatriz.this, OtherActivities.class);
+                            bundle = new Bundle();
+                            bundle.putFloatArray("elementos", elementosMatrizCramer);
+                            bundle.putInt("renglones",matriz.getRenglones());
+                            bundle.putString("metodo",metodo);
+                            cramerActivity.putExtras(bundle);
+                            startActivity(cramerActivity);
+                            Log.d("Cramer", Arrays.toString(elementosMatrizCramer));
+                        }else{
+                            Toast toast = Toast.makeText(getApplicationContext(), "Matriz no valida para este método", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
                         break;
+                    //Matriz cuadrada
                     case "Inversa":
-                        float[] elementosMatrizInversa = matriz.getInversa();
-                        Intent inverseActivity = new Intent(MenuMatriz.this, GaussActivity.class);
-                        bundle = new Bundle();
-                        bundle.putFloatArray("elementos",elementosMatrizInversa);
-                        bundle.putInt("columnas",matriz.getColumnas());
-                        bundle.putInt("renglones",matriz.getRenglones());
-                        bundle.putString("metodo",metodo);
-                        inverseActivity.putExtras(bundle);
-                        startActivity(inverseActivity);
+                        if(matriz.getRenglones()==matriz.getColumnas()){
+                            float[] elementosMatrizInversa = matriz.getInversa();
+                            Intent inverseActivity = new Intent(MenuMatriz.this, GaussActivity.class);
+                            bundle = new Bundle();
+                            bundle.putFloatArray("elementos",elementosMatrizInversa);
+                            bundle.putInt("columnas",matriz.getColumnas());
+                            bundle.putInt("renglones",matriz.getRenglones());
+                            bundle.putString("metodo",metodo);
+                            inverseActivity.putExtras(bundle);
+                            startActivity(inverseActivity);
+                        }else{
+                            Toast toast = Toast.makeText(getApplicationContext(), "Método requiere matriz cuadrada(NxN)", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                         break;
+                    //Matriz cuadrada
                     case "Determinante":
-                        float resDeterminante = matriz.getDeterminante();
-                        Intent determinanteActivity = new Intent(MenuMatriz.this, OtherActivities.class);
-                        bundle = new Bundle();
-                        bundle.putFloat("elemento", resDeterminante);
-                        bundle.putString("metodo",metodo);
-                        determinanteActivity.putExtras(bundle);
-                        startActivity(determinanteActivity);
-                        Log.d("Determinante", String.valueOf(resDeterminante));
+                        if(matriz.getRenglones()==matriz.getColumnas()) {
+                            float resDeterminante = matriz.getDeterminante();
+                            Intent determinanteActivity = new Intent(MenuMatriz.this, OtherActivities.class);
+                            bundle = new Bundle();
+                            bundle.putFloat("elemento", resDeterminante);
+                            bundle.putString("metodo", metodo);
+                            determinanteActivity.putExtras(bundle);
+                            startActivity(determinanteActivity);
+                            Log.d("Determinante", String.valueOf(resDeterminante));
+                        }else{
+                            Toast toast = Toast.makeText(getApplicationContext(), "Método requiere matriz cuadrada(NxN)", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                         break;
                     default:
                         Log.d("Se seleccionó", metodo);
@@ -232,7 +263,7 @@ public class MenuMatriz extends AppCompatActivity {
             for (int j = 0; j < ren; j++){
                 EditText eT = new EditText(((EditText)findViewById(R.id.eTPrincipal)).getContext());       //Checar
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 140);
-                eT.setText(String.valueOf(parcheDeDios));
+                eT.setText("0");
                 params.setMargins(100+(i*100),80+(j*100),(i*100),60);
                 params.addRule(EditText.TEXT_ALIGNMENT_CENTER);
                 //eT.setTextSize(12);

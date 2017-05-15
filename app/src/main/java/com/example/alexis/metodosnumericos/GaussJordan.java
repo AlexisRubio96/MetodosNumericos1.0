@@ -55,6 +55,8 @@ public class GaussJordan extends Metodos{
             }
         }
 
+
+
         return mat;
 
     }

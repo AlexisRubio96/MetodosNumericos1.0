@@ -98,6 +98,16 @@ public class Matriz {
             treeElementos.put(key,value);
         }
 
+        //quitar
+        Set<Map.Entry<Integer, float[]>> entries2 = treeElementos.entrySet();
+        Iterator<Map.Entry<Integer, float[]>> iter2 = entries2.iterator();
+        while(iter2.hasNext()){
+            Map.Entry<Integer,float[]> entry = iter2.next();
+            Integer iteracion = entry.getKey();
+            float[] elem = entry.getValue();
+            Log.d("Con iterador2", Arrays.toString(elem));
+        }
+
 
         return treeElementos;
 

@@ -3,6 +3,9 @@ package com.example.alexis.metodosnumericos;
 import android.util.Log;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -49,7 +52,26 @@ public class Gauss extends Metodos{
             for (int cont = 0; cont < matriz.getRenglones(); cont++) {
                 Log.d("Renglon"+String.valueOf(cont), Arrays.toString(mat[cont]));
             }
-            iteraciones.put(i,mat);
+
+            float[][] matIte = new float[matriz.getRenglones()][matriz.getColumnas()];
+            for (int i2 = 0; i2 < matriz.getRenglones(); i2++) {
+                for (int j2 = 0; j2 < matriz.getColumnas(); j2++) {
+                    matIte[i2][j2] = mat[i2][j2];
+                }
+            }
+            iteraciones.put(i,matIte);
+        }
+
+        Set<Map.Entry<Integer, float[][]>> entries = iteraciones.entrySet();
+        Iterator<Map.Entry<Integer, float[][]>> iter = entries.iterator();
+
+        while(iter.hasNext()){
+            Map.Entry<Integer,float[][]> entry = iter.next();
+            Integer iteracion = entry.getKey();
+            float[][] elem = entry.getValue();
+            for (int po = 0; po < elem.length; po++) {
+                Log.d("Con iterador1"+"Matriz"+String.valueOf(iteracion), Arrays.toString(elem[po]));
+            }
         }
 
         return iteraciones;
