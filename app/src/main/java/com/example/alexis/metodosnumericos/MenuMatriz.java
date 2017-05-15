@@ -23,6 +23,9 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class MenuMatriz extends AppCompatActivity {
 
@@ -128,24 +131,28 @@ public class MenuMatriz extends AppCompatActivity {
                 Bundle bundle;
                 switch (metodo){
                     case "Gauss":
-                        float[] elementosMatrizGauss = matriz.getGauss();
-                        for (float num :
-                                elementosMatrizGauss) {
-                            Log.d("*****", String.valueOf(num));
-                        }
+                        TreeMap<Integer, float[]> elementosMatrizGauss = matriz.getGauss();
                         Intent gaussActivity = new Intent(MenuMatriz.this,GaussActivity.class);
                         bundle = new Bundle();
-                        bundle.putFloatArray("elementos", elementosMatrizGauss);
                         bundle.putInt("columnas",matriz.getColumnas());
                         bundle.putInt("renglones",matriz.getRenglones());
+                        bundle.putString("metodo", metodo);
                         gaussActivity.putExtras(bundle);
                         startActivity(gaussActivity);
                         break;
                     case "GaussJordan":
                         float[] elementosMatrizGaussJordan = matriz.getGaussJordan();
+                        Intent gaussJordanActivity = new Intent(MenuMatriz.this, GaussActivity.class);
+                        bundle = new Bundle();
+                        bundle.putFloatArray("elementos", elementosMatrizGaussJordan);
+                        bundle.putInt("columnas",matriz.getColumnas());
+                        bundle.putInt("renglones",matriz.getRenglones());
+                        bundle.putString("metodo",metodo);
+                        gaussJordanActivity.putExtras(bundle);
+                        startActivity(gaussJordanActivity);
                         break;
                     case "GaussSeidel":
-                        float[] elementosGaussSeidel = matriz.getGaussSeidel((float)0.01);
+                        double[] elementosGaussSeidel = matriz.getGaussSeidel((double)0.01);
                         Log.d("GaussSeidel", Arrays.toString(elementosGaussSeidel));
                         break;
                     case "Cramer":
@@ -153,6 +160,15 @@ public class MenuMatriz extends AppCompatActivity {
                         Log.d("Cramer", Arrays.toString(elementosMatrizCramer));
                         break;
                     case "Inversa":
+                        float[] elementosMatrizInversa = matriz.getInversa();
+                        Intent inverseActivity = new Intent(MenuMatriz.this, GaussActivity.class);
+                        bundle = new Bundle();
+                        bundle.putFloatArray("elementos",elementosMatrizInversa);
+                        bundle.putInt("columnas",matriz.getColumnas());
+                        bundle.putInt("renglones",matriz.getRenglones());
+                        bundle.putString("metodo",metodo);
+                        inverseActivity.putExtras(bundle);
+                        startActivity(inverseActivity);
                         break;
                     case "Determinante":
                         float resDeterminante = matriz.getDeterminante();

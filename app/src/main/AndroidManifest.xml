@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuMatriz" />
-        <activity android:name=".GaussActivity"></activity>
+        <activity android:name=".GaussActivity" />
+        <activity android:name=".OtherActivities"></activity>
     </application>
 
 </manifest>

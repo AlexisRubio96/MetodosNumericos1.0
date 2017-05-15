@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.Arrays;
 
@@ -15,6 +16,8 @@ public class GaussActivity extends AppCompatActivity {
     private int columnas;
     private int renglones;
     private RelativeLayout layoutMatriz;
+    private String metodo;
+    private TextView tVTitulo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +30,18 @@ public class GaussActivity extends AppCompatActivity {
         if(extras == null){
             Log.d("Es null", "nulllll");
         }else{
-            elementosMatriz = extras.getFloatArray("elementos");
             columnas = extras.getInt("columnas");
             renglones = extras.getInt("renglones");
+            metodo = extras.getString("metodo");
             Log.d("Elementos", Arrays.toString(elementosMatriz));
+            if(metodo.equals("GaussJordan") || metodo.equals("Inversa")){
+                elementosMatriz = extras.getFloatArray("elementos");
+                this.generarMatrizResultado();
+            }else if(metodo.equals("Gauss")){
+
+            }
         }
 
-        this.generarMatrizResultado();
 
 //        Bundle elementos = getIntent().getExtras();
 //        float[] elementosMatriz = elementos.getFloatArray("ElementosMatriz");

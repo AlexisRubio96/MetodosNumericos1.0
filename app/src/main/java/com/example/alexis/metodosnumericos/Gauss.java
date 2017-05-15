@@ -3,6 +3,7 @@ package com.example.alexis.metodosnumericos;
 import android.util.Log;
 
 import java.util.Arrays;
+import java.util.TreeMap;
 
 /**
  * Created by Alexis on 04/05/2017.
@@ -16,10 +17,12 @@ public class Gauss extends Metodos{
         float[][] mat = matriz.getMatriz();
     }
 
-    public float[][] runGauss(){
+    //Se regresa treeMap para regresar cada una de las iteraciones iteraciones
+    public TreeMap<Integer, float[][]> runGauss(){
 
         float[][] mat = matriz.getMatriz();
         float[][] matB = new float[2][matriz.getColumnas()];
+        TreeMap<Integer, float[][]> iteraciones = new TreeMap<Integer, float[][]>();
 
 
         for (int i = 0; i < matriz.getRenglones(); i++) {
@@ -46,9 +49,10 @@ public class Gauss extends Metodos{
             for (int cont = 0; cont < matriz.getRenglones(); cont++) {
                 Log.d("Renglon"+String.valueOf(cont), Arrays.toString(mat[cont]));
             }
+            iteraciones.put(i,mat);
         }
 
-        return mat;
+        return iteraciones;
 
     }
 

@@ -12,8 +12,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Solución Método de Gauss"
-        android:id="@+id/textView2"
+        android:text=""
+        android:id="@+id/tVTtitulo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"

@@ -3,6 +3,10 @@ package com.example.alexis.metodosnumericos;
 import android.util.Log;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Created by Alexis on 04/05/2017.
@@ -74,14 +78,28 @@ public class Matriz {
 
     }
 
-    public float[] getGauss(){
+    public TreeMap<Integer, float[]> getGauss(){
         Log.d("Get Gauss de matriz", String.valueOf(this.getRenglones())+" x "+String.valueOf(this.getColumnas()));
         for (int i = 0; i < this.getRenglones(); i++) {
             Log.d("Renglon"+String.valueOf(i), Arrays.toString(this.getMatriz()[i]));
         }
         Gauss matrizGauss = new Gauss(this);
 
-        return elementosMatriz(matrizGauss.runGauss());
+        TreeMap<Integer, float[]> treeElementos = new TreeMap<Integer, float[]>();
+        TreeMap<Integer, float[][]> treeMatrices = matrizGauss.runGauss();
+
+        Set<Map.Entry<Integer, float[][]>> entries = treeMatrices.entrySet();
+        Iterator<Map.Entry<Integer, float[][]>> iter = entries.iterator();
+
+        while(iter.hasNext()){
+            Map.Entry<Integer, float[][]> entry = iter.next();
+            Integer key = entry.getKey();
+            float[] value = elementosMatriz(entry.getValue());
+            treeElementos.put(key,value);
+        }
+
+
+        return treeElementos;
 
     }
 
@@ -116,8 +134,8 @@ public class Matriz {
 
     }
 
-    //Unica con double
-    public double[] getGaussSeidel(float tolerancia){
+    //Con double
+    public double[] getGaussSeidel(double tolerancia){
 
         float[] valIniciales = {8,1,2};
         Matriz matValiIniciales = new Matriz(1, this.getRenglones(), valIniciales);
@@ -128,6 +146,13 @@ public class Matriz {
 
     }
 
+    public float[] getInversa(){
+
+        Inverse inversa = new Inverse(this);
+
+        return elementosMatriz(inversa.runInverse());
+
+    }
 
     private Matriz[] getCoeficientesConstantes(){
 
@@ -149,18 +174,4 @@ public class Matriz {
         return matrices;
 
     }
-    /*
-    @Override
-    public String toString() {
-
-        ArrayList<String> elementos = new ArrayList<String>();
-        int cont = 0;
-        for (int i = 0; i < this.columnas; i++) {
-            for (int j = 0; j < this.renglones; j++) {
-                Log.d("Elementos", ""+String.valueOf(matriz[j][i]));
-                elementos[0] = String.valueOf(matriz[j][i]);
-            }
-        }
-
-    }*/
 }
