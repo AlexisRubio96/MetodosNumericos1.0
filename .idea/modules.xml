@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MetodosNumericos.iml" filepath="$PROJECT_DIR$/MetodosNumericos.iml" />
+      <module fileurl="file://C:\Users\Alexis\Documents\4to Semestre\Metodos Numericos y AL\MetodosProyecto\MetodosNumericos1.0\MetodosNumericos.iml" filepath="C:\Users\Alexis\Documents\4to Semestre\Metodos Numericos y AL\MetodosProyecto\MetodosNumericos1.0\MetodosNumericos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MetodosNumericos1.0.iml" filepath="$PROJECT_DIR$/MetodosNumericos1.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Alexis\Documents\4to Semestre\Metodos Numericos y AL\MetodosProyecto\MetodosNumericos1.0\app\app.iml" filepath="C:\Users\Alexis\Documents\4to Semestre\Metodos Numericos y AL\MetodosProyecto\MetodosNumericos1.0\app\app.iml" />
     </modules>
   </component>
 </project>
